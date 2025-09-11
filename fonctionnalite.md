@@ -2,275 +2,90 @@
 
 ## Introduction
 
-Ce document fournit une description exhaustive des 20 modules qui composent la plateforme **Waajal Ëlëk**. Chaque module est présenté avec ses fonctionnalités métier et des **notes d'implémentation technique** pour garantir une transparence totale sur l'architecture et les choix de développement. Cette approche a pour but de servir de fondation solide pour les équipes de développement et d'assurer un alignement parfait avec les besoins de la Mutuelle des Armées.
+Ce document fournit une description exhaustive et approfondie des modules qui composeront la plateforme **Waajal Ëlëk**. Chaque fonctionnalité est détaillée non seulement sur le plan métier mais aussi avec des perspectives d'implémentation technique, garantissant une vision claire pour les équipes de développement et un alignement total avec les ambitions de la Mutuelle des Armées. L'objectif est de construire un système robuste, sécurisé, et évolutif, qui non seulement répond aux exigences du TDR, mais anticipe également les besoins futurs.
+
+L'architecture est pensée pour être modulaire, permettant un développement et une livraison par phases successives, assurant ainsi une mise en production rapide des fonctionnalités essentielles tout en construisant progressivement un écosystème complet.
 
 ---
 
-## PHASE 1 : FONDATIONS ET ENRÔLEMENT (Livraison : 1er novembre 2025)
+## PHASE 1 : FONDATIONS, ENRÔLEMENT ET GESTION DES COMPTES (Livraison socle initial)
 
-### Module 1 : Gestion du Personnel Militaire
+### **Module 1 : Gestion des Adhésions et du Cycle de Vie de l'Adhérent**
 
-*   **Objectif :** Constituer le référentiel central et unique pour toutes les données personnelles, administratives et de carrière des militaires.
+Ce module constitue la pierre angulaire de la plateforme, gérant l'intégralité du parcours de l'adhérent, de sa première interaction avec le système jusqu'à son départ à la retraite. Il assure la création, la mise à jour, et le suivi rigoureux de chaque dossier, garantissant l'unicité et la fiabilité des données. La traçabilité est un élément central : chaque modification, qu'elle concerne l'état civil, le statut ou les informations de contact, est journalisée avec l'identité de l'opérateur et l'horodatage, offrant un audit complet et infalsifiable. Ce module ne se contente pas de stocker des données ; il modélise le cycle de vie de l'adhérent à travers une machine à états finis (`Finite State Machine`). Les statuts (`Adhésion en cours`, `Actif`, `En impayé`, `Suspendu`, `Retraité`, `Rachat en cours`, `Résilié`) sont gérés de manière automatique en fonction des événements survenant sur la plateforme (validation d'adhésion, défaut de paiement, liquidation des droits, etc.), déclenchant des processus métier et des notifications associées.
 
-*   **Fonctionnalités :**
-    *   Gestion complète des dossiers : état civil, contacts, situation familiale, informations bancaires (RIB).
-    *   Profil militaire détaillé : matricule, grade, échelon, corps, unité, date d'incorporation, limite d'âge.
-    *   Historique de carrière : suivi des promotions, affectations, formations et décorations.
-    *   Gestion de la rémunération de référence servant de base au calcul des cotisations.
-    *   Import massif et synchronisation depuis des fichiers Excel/CSV ou via une future API du système de paie.
-    *   Moteur de recherche multicritères (nom, matricule, unité, etc.).
-    *   Gestion documentaire sécurisée associée à chaque profil (ex: CNI, attestations).
+Sur le plan technique, ce module s'appuiera sur une base de données relationnelle robuste comme PostgreSQL. Le modèle de données central (`Adherent`) sera enrichi de tables satellites pour historiser les changements d'adresses, de statuts ou de coordonnées bancaires, suivant une approche de `Slowly Changing Dimensions` (SCD) de type 2 pour conserver une vue historique complète. Des API RESTful sécurisées (`POST /api/v1/adherents`, `PUT /api/v1/adherents/{id}`) permettront la manipulation des données par les interfaces d'administration. L'import initial et les synchronisations périodiques depuis des fichiers (Excel, CSV) seront gérés par des tâches asynchrones (`background jobs`) pour ne pas impacter les performances de l'application, avec des rapports détaillés sur les succès et les échecs d'import.
 
-*   **Notes d'implémentation technique :**
-    *   **Modèles de données :**
-        *   `MilitaryPersonnel(id, first_name, last_name, matricule, birth_date, rank, unit, base_salary, status, ...)`
-        *   `CareerHistory(id, personnel_id, event_type, event_date, description)`
-        *   `PersonnelDocument(id, personnel_id, document_type, file_path, encrypted_dek)`
-    *   **API Endpoints :**
-        *   `GET /api/v1/military_personnel` : Liste paginée du personnel.
-        *   `POST /api/v1/military_personnel/import` : Endpoint pour l'import de fichiers CSV/Excel, traité par un background job.
-        *   `GET /api/v1/military_personnel/{id}` : Détails complets d'un militaire.
-    *   **Sécurité :** Les documents personnels seront chiffrés au repos (AES-256). L'accès aux données sera régi par une politique de contrôle d'accès basée sur les rôles (RBAC).
+La gestion des ayants-droit est une composante critique de ce module. Pour chaque adhérent, le système permettra d'enregistrer un ou plusieurs bénéficiaires en cas de décès, avec la possibilité de définir des quotes-parts de réversion spécifiques pour chacun. Ce processus inclut la collecte et la validation des pièces justificatives (pièces d'identité, livrets de famille), qui seront stockées de manière sécurisée. En cas de décès de l'adhérent principal, le système activera un workflow spécifique pour la liquidation des droits au profit des ayants-droit désignés, en fonction des règles de réversion paramétrées dans le contrat, assurant une transition gérée et conforme aux engagements du régime.
 
-### Module 2 : Adhésions et Contrats
+### **Module 2 : Gestion des Contrats et des Cotisations**
 
-*   **Objectif :** Gérer l'ensemble du cycle de vie de l'adhésion d'un militaire au régime de retraite.
+Ce module est le moteur financier du régime. Il gère la relation contractuelle avec l'adhérent et assure le calcul, le suivi, et la collecte des cotisations. Lors de l'adhésion, un contrat est généré, encapsulant toutes les règles métier applicables : taux de cotisation (part salariale, part employeur), plafond de cotisation, options de versements supplémentaires (programmés ou exceptionnels). Ces paramètres sont historisés, permettant de retracer l'évolution des conditions contractuelles d'un adhérent au fil du temps. Le système gère également les avenants au contrat, permettant des modifications tracées (changement de taux, de bénéficiaires) qui génèrent des documents contractuels mis à jour et archivés.
 
-*   **Fonctionnalités :**
-    *   Processus d'enrôlement en ligne avec workflow de validation (Saisie → Vérification → Approbation → Activation).
-    *   Création automatique du contrat d'adhésion à partir d'un enrôlement validé.
-    *   Gestion des différents statuts d'adhésion : `Actif`, `Suspendu`, `Résilié`, `En attente`.
-    *   Paramétrage des contrats : taux de cotisation (salariale, patronale), plafonds, options spécifiques.
-    *   Génération et archivage des bulletins d'adhésion au format PDF.
+Le calcul des cotisations est un processus automatisé, exécuté mensuellement par un job récurrent. Ce processus s'appuie sur la rémunération de référence de l'adhérent et les paramètres de son contrat pour générer un échéancier de paiement précis. Chaque échéance est un objet distinct avec un statut (`En attente`, `Payé`, `En retard`), permettant un suivi fin des encaissements. Le module intègre une logique de rapprochement pour lier les paiements reçus (via le module de paiement) aux échéances de cotisations correspondantes. En cas de défaut de paiement prolongé, le système peut automatiquement déclencher le changement de statut de l'adhérent vers "En impayé", initiant des processus de relance.
 
-*   **Notes d'implémentation technique :**
-    *   **Modèles de données :**
-        *   `Membership(id, personnel_id, contract_type, status, effective_date)`
-        *   `Contract(id, membership_id, contribution_rate, ceiling, ...)`
-    *   **Processus Asynchrones :** Un `State Machine` (ex: gemme AASM) sera utilisé pour gérer les transitions de statut de l'adhésion, garantissant l'intégrité du processus et déclenchant des notifications.
-    *   **API Endpoints :**
-        *   `POST /api/v1/enrollments` : Soumission d'une nouvelle demande d'enrôlement.
-        *   `POST /api/v1/memberships/{id}/approve` : Endpoint sécurisé pour l'approbation par un gestionnaire.
+Techniquement, la logique de calcul des cotisations sera isolée dans des `Service Objects` ou des fonctions dédiées, rigoureusement testées unitairement pour garantir leur exactitude. Le modèle de données distinguera clairement le `Contrat` (les règles) de la `Cotisation` (l'instance financière mensuelle). Pour les versements exceptionnels, des endpoints API spécifiques (`POST /api/v1/contracts/{id}/voluntary_contribution`) permettront aux adhérents ou aux gestionnaires de déclencher des paiements hors du cycle mensuel normal, offrant une flexibilité maximale dans la constitution de l'épargne.
 
-### Module 3 : Cotisations et Points
+### **Module 3 : Conversion en Points et Pilotage Technique**
 
-*   **Objectif :** Assurer le calcul, la collecte et la conversion des cotisations en points de retraite.
+Ce module est au cœur de la promesse du régime par points. Il assure la conversion transparente et équitable des cotisations versées en points de retraite, qui constituent le droit futur de l'adhérent. Chaque versement de cotisation validé déclenche une transaction de conversion. Cette opération utilise la "valeur d'achat du point" en vigueur à la date de la transaction pour déterminer le nombre de points acquis. L'intégralité de ces transactions est conservée dans un registre immuable, offrant à l'adhérent une traçabilité totale sur la manière dont son capital de points a été constitué.
 
-*   **Fonctionnalités :**
-    *   Calcul automatique des cotisations mensuelles basé sur la rémunération de référence et le taux défini au contrat.
-    *   Gestion des échéanciers de paiement avec suivi des statuts (`Payé`, `En retard`, `En attente`).
-    *   Conversion automatique des cotisations versées en points, selon la valeur d'achat du point en vigueur.
-    *   Gestion des points gratuits et bonifications (attribués par les administrateurs).
-    *   Historique complet et transparent de toutes les transactions de cotisations et d'acquisition de points pour chaque adhérent.
+Le pilotage technique des paramètres du régime est une fonctionnalité stratégique de ce module, réservée aux administrateurs actuariels. Il offre une interface sécurisée pour gérer les deux valeurs fondamentales du système : la **valeur d'achat du point** (le coût d'acquisition d'un point) et la **valeur de service du point** (la valeur d'un point lors de la liquidation en rente). Toute modification de ces valeurs est soumise à un processus de validation à plusieurs niveaux ("maker-checker") et est historisée. Le système peut ainsi utiliser la valeur correcte en fonction de la date de la transaction, que ce soit pour un achat de points ou pour le calcul d'une pension.
 
-*   **Notes d'implémentation technique :**
-    *   **Processus Asynchrones :** Un job récurrent (via Solid Queue) s'exécutera en début de mois pour calculer et générer toutes les cotisations dues.
-    *   **Modèles de données :**
-        *   `Contribution(id, membership_id, amount_due, amount_paid, status, due_date, payment_date)`
-        *   `PointTransaction(id, membership_id, points_acquired, value_per_point, transaction_date, source_contribution_id)`
-    *   **Calculs :** La logique de calcul sera isolée dans des `Service Objects` Ruby dédiés, facilitant les tests unitaires et la maintenance. La valeur d'achat du point sera stockée dans une table `SystemParameter` pour être modifiable sans déploiement.
-
-### Module 4 : Intégration des Paiements
-
-*   **Objectif :** Offrir des moyens de paiement modernes et sécurisés pour les cotisations et les prestations.
-
-*   **Fonctionnalités :**
-    *   Intégration avec les API de Mobile Money (Wave, Orange Money, Free Money).
-    *   Paiement par virement bancaire avec génération de références uniques pour le rapprochement.
-    *   Réconciliation automatique des transactions.
-    *   Journal d'audit de toutes les transactions financières.
-
-*   **Notes d'implémentation technique :**
-    *   **API & Webhooks :** L'interaction avec les plateformes de paiement se fera via des appels API sécurisés. Nous implémenterons des endpoints de `webhooks` pour recevoir les confirmations de paiement de manière asynchrone, garantissant qu'une interruption de service momentanée ne cause pas de perte de données.
-    *   **Sécurité :** Toutes les clés d'API et secrets seront stockés de manière chiffrée via le système de `credentials` de Rails. Aucune information sensible ne sera versionnée dans le code.
-
-### Module 5 : Portail Adhérent (Consultation)
-
-*   **Objectif :** Fournir aux adhérents un accès sécurisé à leurs informations de retraite.
-
-*   **Fonctionnalités :**
-    *   Tableau de bord personnel : solde de points, total des cotisations, valeur estimée du capital.
-    *   Consultation de l'historique des cotisations et des points acquis.
-    *   Téléchargement des documents personnels (bulletin d'adhésion, relevés annuels).
-    *   Interface 100% responsive (mobile-first).
-
-*   **Notes d'implémentation technique :**
-    *   **Frontend :** Développé en React/TypeScript, le portail communiquera avec le backend via une API RESTful sécurisée par token (JWT).
-    *   **Performance :** Les données agrégées du tableau de bord (total de points, etc.) seront mises en cache (côté serveur avec Redis) pour un affichage quasi-instantané.
-
-### Module 6 : Administration & Sécurité
-
-*   **Objectif :** Permettre aux administrateurs de gérer les utilisateurs, les droits et de superviser la sécurité de la plateforme.
-
-*   **Fonctionnalités :**
-    *   Gestion des utilisateurs (administrateurs, gestionnaires).
-    *   Gestion des rôles et permissions granulaires (RBAC).
-    *   Journal d'audit complet de toutes les actions effectuées sur la plateforme.
-    *   Paramétrage global du système (valeur du point, taux, etc.).
-
-*   **Notes d'implémentation technique :**
-    *   **Modèles de données :**
-        *   `User(id, email, encrypted_password, role_id)`
-        *   `Role(id, name)`
-        *   `Permission(id, action, subject_class)`
-    *   **Sécurité :** L'authentification multi-facteurs (2FA) via TOTP (ex: Google Authenticator) sera obligatoire pour tous les comptes administrateurs. La gemme `Pundit` sera utilisée pour gérer les autorisations de manière centralisée et testable.
+Ce module inclut également la capacité d'attribuer des points gratuits. Cette fonctionnalité, strictement encadrée par des droits d'accès spécifiques, permet aux administrateurs d'allouer des points à des adhérents dans des circonstances particulières (bonifications, campagnes promotionnelles, corrections, etc.). Chaque attribution de ce type est justifiée par un motif et est enregistrée dans le registre des transactions de points avec une mention "Attribution gratuite", garantissant une transparence totale sur l'origine de chaque point détenu par l'adhérent.
 
 ---
 
-## PHASE 2 : GESTION DES PRESTATIONS (Livraison : 1er décembre 2025)
+## PHASE 2 : GESTION DES PRESTATIONS ET OPÉRATIONS FINANCIÈRES
 
-### Module 7 : Gestion des Pensions de Retraite
+### **Module 4 : Consultation de l'Épargne et Portail Adhérent**
 
-*   **Objectif :** Gérer la liquidation des droits à la retraite et le versement des pensions.
+Ce module est la vitrine du service pour l'adhérent, lui offrant une interface claire, sécurisée et en temps réel pour suivre la progression de son épargne retraite. Le portail, accessible via un navigateur web et conçu selon une approche "mobile-first", présente un tableau de bord synthétique affichant les indicateurs clés : le solde total de points acquis, la valeur estimée du capital (basée sur les cotisations versées et les intérêts potentiels), et une projection de la future rente. L'affichage de l'épargne cumulée est mis à jour en temps réel à chaque nouvelle cotisation ou attribution d'intérêts, fournissant une vision dynamique et motivante.
 
-*   **Fonctionnalités :**
-    *   Calcul des droits à la liquidation basé sur le total des points acquis multiplié par la valeur de service du point.
-    *   Gestion des différentes options de sortie : rente viagère, capital unique, ou une combinaison des deux.
-    *   Gestion des bénéficiaires et des taux de réversion.
-    *   Génération des ordres de paiement mensuels pour les rentes.
+Au-delà du tableau de bord, le portail offre un accès détaillé à l'ensemble des opérations. L'adhérent peut consulter l'historique complet de ses cotisations, en distinguant les versements contractuels, volontaires et exceptionnels. Il peut également visualiser le registre de ses acquisitions de points, avec le détail de la date, du montant de la cotisation correspondante et de la valeur d'achat du point utilisée. Cette transparence est fondamentale pour établir et maintenir la confiance de l'adhérent dans le système. Le portail permet enfin de télécharger des documents importants comme le bulletin d'adhésion initial, les relevés de situation annuels, et les attestations fiscales.
 
-*   **Notes d'implémentation technique :**
-    *   **Moteur de calcul :** La logique de liquidation sera encapsulée dans un service dédié. Les calculs de rente viagère utiliseront des tables de mortalité réglementaires qui seront importées et stockées dans la base de données.
-    *   **Processus Asynchrones :** La génération mensuelle des ordres de paiement de pension sera effectuée par un background job.
+Techniquement, ce portail sera développé comme une Single Page Application (SPA) en utilisant un framework moderne comme React ou Vue.js. Il communiquera avec le backend via une API RESTful sécurisée par des tokens JWT (JSON Web Tokens). Pour garantir une excellente réactivité, les données agrégées du tableau de bord seront pré-calculées et mises en cache côté serveur (avec Redis, par exemple), tandis que les données détaillées seront paginées pour assurer des temps de chargement rapides, même avec un historique de plusieurs années.
 
-### Module 8 : Gestion des Retraités
+### **Module 5 : Gestion des Rachats et des Avances sur Capital**
 
-*   **Objectif :** Assurer le suivi des militaires une fois leur statut passé à "Retraité".
+Ce module offre la flexibilité financière nécessaire aux adhérents en leur permettant d'accéder à leur capital avant l'échéance de la retraite, sous des conditions bien définies. Il gère deux types d'opérations distinctes : le rachat (partiel ou total), qui est un retrait définitif d'une partie du capital, et l'avance, qui est un prêt remboursable adossé au capital. Pour chaque type de demande, l'adhérent peut initier le processus depuis son portail, où un simulateur lui permet d'évaluer l'impact de l'opération : montant des pénalités éventuelles pour un rachat, ou tableau d'amortissement et impact sur la pension future pour une avance.
 
-*   **Fonctionnalités :**
-    *   Transition automatique du statut "Actif" à "Retraité" à la date de liquidation.
-    *   Historique complet des versements de pension.
-    *   Gestion des certificats de vie avec rappels automatiques.
+Le processus est encadré par un workflow de validation. Une fois la demande soumise, le système vérifie automatiquement l'éligibilité de l'adhérent en fonction de règles paramétrables (ancienneté du contrat, pourcentage maximal du capital accessible, etc.). La demande est ensuite transmise à un gestionnaire pour approbation. Le module calcule le montant exact du rachat en tenant compte des intérêts et des pénalités, ou le montant maximal de l'avance. En cas d'approbation, il génère l'ordre de paiement correspondant et, pour une avance, met en place l'échéancier de remboursement qui sera intégré au cycle de paiement de l'adhérent.
 
-*   **Notes d'implémentation technique :**
-    *   **Modèles de données :** Le modèle `MilitaryPersonnel` aura un statut qui passera à `retired`. Un nouveau modèle `PensionPayment(id, retiree_id, amount, payment_date, status)` suivra les versements.
+La complexité de ce module réside dans la précision des calculs financiers et la clarté des informations fournies à l'adhérent. Les règles de calcul des pénalités, des intérêts sur avance, et les conditions d'éligibilité seront stockées dans des tables de paramètres pour être facilement ajustables par les administrateurs sans modification du code. Chaque étape du workflow (demande, validation, paiement, remboursement) est tracée et notifiée à l'adhérent, assurant une expérience fluide et transparente.
 
-### Module 9 : Démissions & Rachats
+### **Module 6 : Gestion des Sinistres et Liquidation (Départ à la Retraite)**
 
-*   **Objectif :** Gérer les cas de sortie anticipée du régime.
+Ce module orchestre l'étape la plus importante du cycle de vie de l'adhérent : la transformation de ses points accumulés en une prestation de retraite. Il gère le processus de "liquidation", qui peut être déclenché par l'atteinte de l'âge de la retraite ou à la demande de l'adhérent. Le module propose un simulateur de prestations permettant à l'adhérent d'explorer les différentes options de sortie : une **rente viagère** (un revenu régulier jusqu'au décès), une **sortie en capital unique** (le versement de tout ou partie de l'épargne en une seule fois), ou des **rentes certaines** (un revenu versé sur une durée déterminée).
 
-*   **Fonctionnalités :**
-    *   Gestion des demandes de rachat partiel ou total.
-    *   Calcul automatique des montants rachetables en fonction des conditions (ancienneté, pénalités, etc.).
-    *   Workflow de validation pour les demandes de rachat.
+Le calcul des prestations est d'une importance critique. Pour une sortie en rente, le système multiplie le nombre total de points acquis par la "valeur de service du point" en vigueur au moment de la liquidation pour déterminer le montant de la rente annuelle. Ce calcul intègre également des paramètres actuariels comme les tables de mortalité pour les rentes viagères. Pour une sortie en capital, le module calcule la valeur de rachat totale en fonction des cotisations versées et des intérêts générés. Le système gère également la réversion de la pension aux ayants-droit en cas de décès du retraité, en appliquant les taux définis dans le contrat.
 
-*   **Notes d'implémentation technique :**
-    *   **API Endpoints :** `POST /api/v1/redemptions` pour initier une demande, qui sera ensuite traitée via un workflow de validation interne.
-
-### Module 10 : Comptabilité & Comptes
-
-*   **Objectif :** Assurer un suivi financier et comptable rigoureux de toutes les opérations.
-
-*   **Fonctionnalités :**
-    *   Enregistrement automatique de tous les flux financiers (cotisations, pensions, rachats, investissements).
-    *   Plan comptable adapté au régime.
-    *   Rapprochement bancaire facilité par l'import de relevés.
-    *   Génération de journaux comptables.
-
-*   **Notes d'implémentation technique :**
-    *   **Double entrée :** Nous implémenterons un système de comptabilité en partie double à l'aide de la gemme `DoubleEntry` pour garantir l'intégrité des écritures comptables.
-    *   **Modèles de données :** `Account(id, name, type)`, `JournalEntry(id, date, description)`, `Transaction(id, journal_entry_id, account_id, direction, amount)`.
-
-### Module 11 : Rapports & Analyses
-
-*   **Objectif :** Fournir des outils de pilotage stratégique à la direction de la Mutuelle.
-
-*   **Fonctionnalités :**
-    *   Tableaux de bord avec les indicateurs clés (KPIs) en temps réel : ratio actifs/retraités, taux de couverture, etc.
-    *   Génération de rapports réglementaires et d'activité (PDF, Excel).
-    *   Outils d'analyse ad-hoc pour explorer les données.
-
-*   **Notes d'implémentation technique :**
-    *   **Data Warehousing :** Pour les analyses complexes, les données opérationnelles de PostgreSQL seront répliquées vers une base de données optimisée pour l'analytique (Data Warehouse), afin de ne pas impacter les performances de l'application principale.
+Une fois l'option de sortie choisie et validée, le module automatise la gestion des paiements. Pour une rente, il génère des ordres de virement mensuels ou annuels et assure leur suivi. Pour une sortie en capital, il déclenche un paiement unique. Tout le processus, de la simulation à la validation et au versement, est entièrement tracé. Le système est également capable de gérer des cas complexes, comme la liquidation partielle, où un adhérent choisit de liquider une partie de ses points tout en continuant à cotiser sur le reste.
 
 ---
 
-## PHASE 3 : MODULES EXPERTS & MOBILITÉ (Livraison : 1er janvier 2026)
+## PHASE 3 : MODULES AVANCÉS, PILOTAGE ET MOBILITÉ
 
-### Module 12 : Simulateur Actuariel Global
+### **Module 7 : Architecture Technique, Sécurité et Intégrations**
 
-*   **Objectif :** Doter la Mutuelle d'un outil puissant pour les projections à long terme et l'analyse de risques.
+Ce module n'est pas une fonctionnalité visible pour l'utilisateur final, mais le fondement technique et sécuritaire de toute la plateforme. L'architecture sera conçue pour être évolutive, agile et résiliente. Elle reposera sur une infrastructure cloud moderne, permettant de s'adapter dynamiquement à la charge. Le système sera capable de s'intégrer avec des systèmes tiers, notamment le logiciel de paie de la Mutuelle des Armées, via des API sécurisées ou des échanges de fichiers (CSV, Excel) pour automatiser la mise à jour des informations des adhérents et la collecte des cotisations. L'intégration avec des solutions de paiement (Mobile Money, virements bancaires) est également un pilier de cette architecture.
 
-*   **Fonctionnalités :**
-    *   Projections actuarielles de l'équilibre du régime sur 10, 20, 30 ans.
-    *   Simulations de type "stress test" (ex: impact d'une crise économique, d'un changement démographique).
-    *   Analyses de sensibilité et simulations Monte Carlo.
+La sécurité est la priorité absolue. Le module mettra en œuvre une défense en profondeur : protection contre les attaques courantes (injection SQL, XSS), chiffrement des données sensibles au repos (données personnelles, documents) et en transit (TLS/SSL). La gestion des accès sera basée sur les rôles (RBAC), avec des profils finement définis (`Administrateur`, `Gestionnaire RH`, `Actuaire`, `Utilisateur simple`), garantissant que chaque utilisateur n'accède qu'aux données et fonctionnalités strictement nécessaires à sa mission. L'authentification forte (MFA/2FA) sera obligatoire pour tous les comptes à privilèges. Un journal d'audit exhaustif enregistrera toutes les actions critiques effectuées sur la plateforme.
 
-*   **Notes d'implémentation technique :**
-    *   **Moteur Python :** Ce module sera développé en **Python** avec des librairies comme **Pandas, NumPy, et SciPy**, et communiquera avec l'application Rails via une API interne. Ce choix technologique donne accès à l'écosystème le plus mature pour l'analyse de données et la modélisation actuarielle.
+L'accessibilité est également une composante clé. L'application sera conçue pour être "responsive", s'adaptant à tous les formats d'écran (ordinateur, tablette, mobile). De plus, une fonctionnalité d'accès hors-ligne sera développée pour les gestionnaires. Ceux-ci pourront télécharger une partie des données nécessaires sur leur appareil (via une application mobile ou une PWA) pour continuer à travailler en déplacement ou dans des zones à faible connectivité. Les modifications effectuées hors-ligne seront synchronisées automatiquement dès que la connexion sera rétablie, garantissant la cohérence des données.
 
-### Module 13 : Avances sur Capital
+### **Module 8 : Tableaux de Bord, Reporting et Outils Actuariels**
 
-*   **Objectif :** Permettre aux adhérents de demander une avance sur leur capital retraite.
+Ce module fournit les outils de pilotage stratégique et opérationnel pour les dirigeants et les gestionnaires de la Mutuelle. Il agrège les données de toute la plateforme pour les présenter sous forme de tableaux de bord dynamiques et de rapports pertinents. Les indicateurs clés (KPIs) comme le ratio démographique (actifs/retraités), le taux de couverture des engagements, le solde technique (cotisations vs prestations), et les statistiques sur le portefeuille d'adhérents (pyramide des âges, répartition par catégorie) sont calculés et affichés en temps réel.
 
-*   **Fonctionnalités :**
-    *   Demande en ligne avec vérification automatique de l'éligibilité.
-    *   Simulation de l'impact de l'avance sur la pension future.
-    *   Gestion de l'échéancier de remboursement.
+Le module intègre un moteur de reporting puissant capable de générer une variété d'états : des statistiques mensuelles sur les encaissements et les décaissements, des listes de capitaux à échoir pour anticiper les futurs départs à la retraite, et des rapports prédictifs basés sur des modèles statistiques. Ces rapports peuvent être exportés aux formats PDF et Excel pour une analyse plus approfondie ou pour répondre à des exigences réglementaires. Une fonctionnalité particulièrement importante est la capacité d'éditer, deux mois avant l'échéance, une liste exhaustive des départs à la retraite prévus, avec les montants à payer, permettant une gestion proactive de la trésorerie.
 
-### Module 14 : Gestion des Investissements
+Au cœur de ce module se trouve un moteur de calcul actuariel. Cet outil, destiné aux actuaires du régime, permet de réaliser des projections financières à long terme. Il utilise les données du portefeuille, les tables de mortalité, et des hypothèses économiques (inflation, rendement des placements) pour modéliser l'équilibre futur du régime. Il permet de simuler l'impact de changements de paramètres (valeur du point, taux de cotisation) sur la viabilité à long terme du système, offrant ainsi un outil d'aide à la décision essentiel pour la gouvernance du régime.
 
-*   **Objectif :** Suivre les performances du portefeuille d'investissements du régime.
+### **Module 9 : Application Mobile et Notifications**
 
-*   **Fonctionnalités :**
-    *   Gestion du portefeuille multi-classes d'actifs.
-    *   Suivi des performances (gains/pertes, rendement).
-    *   Reporting consolidé du portefeuille.
+Pour répondre aux attentes d'un public mobile et connecté, une application mobile native (iOS et Android) sera développée. Elle ne sera pas une simple version mobile du portail web, mais une véritable extension de la plateforme, offrant une expérience utilisateur optimisée et des fonctionnalités exclusives. L'application permettra à l'adhérent d'accéder à toutes les fonctionnalités de consultation de son compte, mais aussi d'interagir avec le système de manière transactionnelle : effectuer des versements de cotisations volontaires via les solutions de Mobile Money intégrées, soumettre une demande de rachat ou d'avance, et suivre le statut de ses demandes en temps réel.
 
-### Module 15 : Intérêts & Rendements
+La sécurité sur l'application mobile sera renforcée par l'utilisation des capacités biométriques des smartphones (empreinte digitale, reconnaissance faciale), offrant un accès à la fois simple et hautement sécurisé. L'application intégrera également un centre de documentation et une messagerie sécurisée pour communiquer avec les gestionnaires.
 
-*   **Objectif :** Calculer et attribuer les rendements financiers aux comptes des adhérents.
-
-*   **Fonctionnalités :**
-    *   Calcul périodique des rendements générés par les investissements.
-    *   Répartition des gains au prorata des points de chaque adhérent.
-
-### Module 16 : Gestion des Assurances
-
-*   **Objectif :** Intégrer la gestion de produits d'assurance complémentaires.
-
-*   **Fonctionnalités :**
-    *   Gestion des contrats d'assurance (décès, invalidité).
-    *   Suivi des primes et gestion des sinistres.
-
-### Module 17 : Centre d'Aide
-
-*   **Objectif :** Fournir une documentation et un support intégrés.
-
-*   **Fonctionnalités :**
-    *   Base de connaissances avec moteur de recherche.
-    *   FAQ dynamique.
-    *   Système de ticketing pour les demandes de support.
-
-### Module 18 : Simulations Personnalisées (Portail Adhérent)
-
-*   **Objectif :** Permettre aux adhérents de simuler leur propre avenir à la retraite.
-
-*   **Fonctionnalités :**
-    *   Simulation de la pension future en fonction de divers scénarios (départ anticipé, augmentation des cotisations, etc.).
-    *   Visualisations graphiques des projections.
-
-### Module 19 : Application Mobile Complète (iOS/Android)
-
-*   **Objectif :** Offrir une expérience mobile riche et transactionnelle.
-
-*   **Fonctionnalités :**
-    *   Toutes les fonctionnalités du portail adhérent.
-    *   Paiement des cotisations via Mobile Money directement depuis l'application.
-    *   Demandes de rachat ou d'avance.
-    *   Notifications push pour les échéances et les événements importants.
-    *   Accès sécurisé par biométrie (empreinte digitale, reconnaissance faciale).
-
-### Module 20 : Moteur de Calcul Actuariel Avancé
-
-*   **Objectif :** Raffiner les calculs actuariels avec des hypothèses multiples.
-
-*   **Fonctionnalités :**
-    *   Intégration d'hypothèses multiples (optimiste, réaliste, pessimiste) dans les calculs.
-    *   API interne pour que les autres modules (Simulations, Pensions) puissent consommer ces calculs complexes.
-
----
-
-Ce document sera mis à jour continuellement durant le projet pour refléter les décisions d'architecture et de conception.
-
----
+Un système de notifications multi-canal (Push, SMS, Email) sera mis en place pour engager l'adhérent de manière proactive. Ce système enverra des alertes pour les événements importants : confirmation de la réception d'une cotisation, notification d'une échéance de paiement à venir, alerte sur le statut d'une demande de rachat, ou encore des communications générales de la part de la Mutuelle. Ces notifications sont paramétrables par l'utilisateur, lui donnant le contrôle sur les informations qu'il souhaite recevoir et par quel canal.
