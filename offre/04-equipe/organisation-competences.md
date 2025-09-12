@@ -28,7 +28,7 @@ Notre architecte frontend combine une expertise technique pointue en développem
 Sa maîtrise des dernières technologies frontend (React 18, TypeScript 5, Next.js) et des frameworks de design (Material-UI, Ant Design) garantit une expérience utilisateur moderne et intuitive. Son approche centrée sur l'accessibilité et l'inclusion numérique assure que la plateforme sera utilisable par tous les militaires, quel que soit leur niveau de familiarité avec les outils numériques.
 
 **Développeur Mobile Senior - Expert Cross-Platform**
-Notre spécialiste mobile apporte 6 années d'expérience dans le développement d'applications financières mobiles, avec une expertise particulière en React Native et Flutter. Il a développé des applications de paiement mobile pour des opérateurs télécoms africains, lui donnant une compréhension unique des contraintes de connectivité et d'ergonomie spécifiques au contexte sénégalais.
+Notre spécialiste mobile apporte 6 années d'expérience dans le développement d'applications financières mobiles, avec une expertise approfondie en **React Native**. Il a développé des applications de paiement mobile pour des opérateurs télécoms africains, maîtrise l'écosystème JavaScript/TypeScript, et possède une compréhension unique des contraintes de connectivité et d'ergonomie spécifiques au contexte sénégalais.
 
 Son expertise couvre l'intégration native avec les plateformes de paiement mobile (Wave, Orange Money, Free Money), l'optimisation pour les appareils à ressources limitées, et l'implémentation de fonctionnalités offline critiques pour les utilisateurs en zone de couverture variable.
 

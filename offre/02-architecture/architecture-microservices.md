@@ -32,7 +32,7 @@ Cette architecture représente un investissement dans l'avenir technologique de 
 ┌──────────────┐            ┌──────────────┐            ┌──────────────┐
 │ FRONTEND     │            │   MOBILE     │            │  ADMIN       │
 │ WEB CLIENT   │            │   CLIENTS    │            │  PORTAL      │
-│ (React 18)   │            │ iOS/Android  │            │ (React 18)   │
+│ (React 18)   │            │(React Native)│            │ (React 18)   │
 └──────────────┘            └──────────────┘            └──────────────┘
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -176,6 +176,18 @@ Notre choix de Spring Boot 3 comme framework principal s'appuie sur plusieurs co
 La version 3 de Spring Boot, basée sur Java 17 LTS (Long Term Support), apporte des améliorations significatives en termes de performances, de sécurité et de productivité développeur. Java 17 étant une version LTS, elle bénéficie d'un support étendu (8 ans minimum) qui garantit la pérennité de notre choix technologique.
 
 L'écosystème Spring offre une intégration native avec l'ensemble des technologies que nous utilisons : Spring Security pour la sécurisation, Spring Data pour l'accès aux données, Spring Cloud pour les fonctionnalités de microservices (service discovery, configuration centralisée, circuit breakers), Spring Batch pour les traitements par lots.
+
+### Applications Client : React 18 et React Native
+
+Notre stratégie frontend s'articule autour de l'écosystème React pour garantir une cohérence technologique et une synergie optimale entre les différentes interfaces utilisateur.
+
+**Frontend Web (React 18)** : Les portails web (adhérents et administrateurs) sont développés avec React 18, la dernière version de cette librairie JavaScript leader du marché. React 18 apporte des améliorations significatives en termes de performances grâce au Concurrent Rendering et au Suspense, permettant une expérience utilisateur fluide même avec des volumes de données importants. L'utilisation de TypeScript garantit une robustesse accrue du code et facilite la maintenance à long terme.
+
+**Application Mobile (React Native)** : L'application mobile est développée avec React Native, permettant de partager jusqu'à 95% du code entre iOS et Android tout en offrant des performances natives. Cette approche cross-platform accélère le développement, simplifie la maintenance et assure une cohérence parfaite de l'expérience utilisateur entre les plateformes.
+
+React Native intègre des composants natifs optimisés pour chaque plateforme (navigation native, gestion des permissions, accès aux APIs système), tout en permettant l'utilisation de bibliothèques JavaScript partagées avec le frontend web. Cette synergie technologique facilite les évolutions fonctionnelles et garantit une cohérence des règles métier entre tous les points d'accès.
+
+**Progressive Web App (PWA)** : Le portail web intègre également les fonctionnalités PWA (Progressive Web App), permettant une installation sur mobile comme une application native tout en conservant les avantages du web (mise à jour automatique, pas de stores d'applications). Cette technologie offre une solution de fallback élégante pour les utilisateurs ne souhaitant pas installer l'application native.
 
 ### Communication Inter-Services : Synchrone et Asynchrone
 

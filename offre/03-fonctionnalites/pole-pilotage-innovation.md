@@ -70,9 +70,11 @@ Cette optimisation est réalisée de manière dynamique, en tenant compte de l'�
 
 ## Module 19 : Application Mobile Native - Mobilité et Accessibilité Totale
 
-### Développement Cross-Platform Avancé
+### Développement React Native Avancé
 
-L'application mobile Waajal Ëlëk représente l'incarnation mobile de l'ensemble de la plateforme, optimisée pour les spécificités des appareils mobiles et les contraintes de connectivité du contexte sénégalais. Développée avec les technologies cross-platform les plus avancées (React Native/Flutter), elle offre une expérience native sur iOS et Android tout en maintenant une cohérence parfaite avec le portail web.
+L'application mobile Waajal Ëlëk représente l'incarnation mobile de l'ensemble de la plateforme, optimisée pour les spécificités des appareils mobiles et les contraintes de connectivité du contexte sénégalais. Développée avec **React Native**, cette solution cross-platform moderne offre une expérience véritablement native sur iOS et Android tout en maintenant une cohérence parfaite avec le portail web React.js.
+
+L'architecture React Native permet de partager jusqu'à 95% du code entre les plateformes iOS et Android, accélérant considérablement le développement tout en garantissant des performances optimales. Cette technologie, utilisée par Facebook, Instagram et de nombreuses applications financières mondiales, assure une maintenance simplifiée et des mises à jour simultanées sur toutes les plateformes.
 
 L'application intègre des fonctionnalités de synchronisation intelligente qui permettent de travailler en mode déconnecté et de synchroniser automatiquement les données dès que la connectivité est rétablie. Cette capacité est cruciale pour une population militaire souvent en déplacement dans des zones à connectivité limitée.
 
