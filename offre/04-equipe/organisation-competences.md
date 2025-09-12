@@ -112,3 +112,60 @@ Notre organisation s'appuie sur des rituels Agile adaptés : daily standups quot
 Chaque membre de l'équipe respecte des standards de qualité élevés : code review obligatoire par les pairs, tests unitaires avec couverture minimale de 85%, documentation technique systématique, et veille technologique permanente. Cette discipline collective garantit la maintenabilité et l'évolutivité du code produit.
 
 Cette équipe exceptionnelle, par la diversité et la complémentarité de ses expertises, garantit que le projet Waajal Ëlëk bénéficiera non seulement des meilleures technologies disponibles, mais surtout d'une vision holistique qui intègre les enjeux techniques, métier, réglementaires et humains dans une solution parfaitement adaptée aux besoins de la Mutuelle des Armées du Sénégal.
+
+## Matrice de Compétences - Tableau Récapitulatif de l'Équipe
+
+### Synthèse Organisationnelle et Responsabilités
+
+| **Profil** | **Nom du Profil** | **Rôle Principal** | **Responsabilités Techniques et Métier** |
+|------------|-------------------|--------------------|--------------------------------------------|
+| **DIRECTION** | **Architecte Solution Senior** | Chef de Projet Technique | • Direction technique globale du projet<br>• Conception architecture microservices cloud-native<br>• Validation des choix technologiques stratégiques<br>• Coordination inter-équipes et governance technique |
+| **BACKEND** | **Lead Développeur Backend** | Responsable Microservices | • Développement des 16 microservices Spring Boot 3<br>• Implémentation des APIs REST sécurisées<br>• Optimisation performance et scalabilité<br>• Supervision équipe backend (3 développeurs) |
+| **FRONTEND** | **Architecte Frontend** | Responsable Expérience Web | • Conception portails web React 18 + TypeScript<br>• Design system et composants réutilisables<br>• Optimisation UX/UI pour accessibilité universelle<br>• Intégration PWA et fonctionnalités offline |
+| **MOBILE** | **Développeur Mobile Senior** | Expert React Native | • Développement application React Native iOS/Android<br>• Intégration Mobile Money (Wave, Orange, Free)<br>• Optimisation performances mobile et mode offline<br>• Gestion notifications push et géolocalisation |
+| **ACTUARIAT** | **Actuaire Conseil Senior** | Expert Régimes Retraite | • Modélisation actuarielle et calculs de prestations<br>• Validation algorithmes de cotisations et points<br>• Conception tables de mortalité adaptées<br>• Conformité réglementaire OHADA et BCEAO |
+| **QUANTITATIF** | **Quant Analyste** | Spécialiste Monte Carlo | • Implémentation simulations Monte Carlo avancées<br>• Modélisation stochastique et optimisation portefeuille<br>• Calibration modèles économiques locaux (UEMOA)<br>• Analytics prédictifs et stress testing |
+| **INTELLIGENCE ARTIFICIELLE** | **Data Scientist Senior** | Expert IA et ML | • Conception système anti-fraude deep learning<br>• Développement robo-advisor personnalisé<br>• Implémentation analytics comportementaux<br>• Optimisation algorithmes ML pour performance |
+| **DEVOPS** | **Ingénieur DevOps Senior** | Responsable Infrastructure | • Architecture cloud multi-environnements (K8s)<br>• Pipelines CI/CD automatisés avec Docker<br>• Monitoring 360° (ELK, Prometheus, Grafana)<br>• Stratégies backup et disaster recovery |
+| **SÉCURITÉ** | **Expert Sécurité** | Responsable Cybersécurité | • Architecture sécurité Zero Trust<br>• Implémentation chiffrement bout-en-bout<br>• Tests de pénétration et audit sécurité<br>• Procedures incident response et SOC |
+| **JURIDIQUE** | **Juriste Fintech** | Responsable Conformité | • Conformité réglementaire BCEAO/UMOA<br>• Validation juridique processus et contrats<br>• Veille réglementaire et adaptation légale<br>• Accompagnement mise en conformité RGPD |
+| **DATABASE** | **DBA Senior** | Responsable Données | • Architecture base PostgreSQL haute disponibilité<br>• Optimisation performances et requêtes complexes<br>• Stratégies backup et réplication master-slave<br>• Gestion volumes données et archivage |
+| **QUALITÉ** | **Ingénieur QA Senior** | Responsable Tests | • Stratégie tests multi-niveaux (pyramide testing)<br>• Automatisation tests avec Cypress et Jest<br>• Tests de performance et charge (JMeter)<br>• Validation qualité et acceptance testing |
+| **MÉTIER** | **Business Analyst Senior** | Expert Analyse Fonctionnelle | • Traduction besoins métier en spécifications<br>• Validation fonctionnelle modules développés<br>• Interface avec équipes Mutuelle des Armées<br>• Documentation processus et workflows |
+| **UX/UI** | **Consultant UX/UI** | Spécialiste Design | • Conception interfaces intuitives et accessibles<br>• Ergonomie adaptée aux profils militaires<br>• Tests utilisabilité et amélioration continue<br>• Conformité WCAG 2.1 AA pour inclusion |
+| **SUPPORT** | **Ingénieur Support** | Expert Intégrations | • Intégrations systèmes legacy et externes<br>• Connecteurs APIs tierces et services web<br>• Support technique et résolution incidents<br>• Documentation technique et formation |
+
+### Répartition par Squad Agile
+
+| **Squad** | **Composition** | **Focus Principal** | **Livrables Clés** |
+|-----------|------------------|---------------------|---------------------|
+| **Squad Backend/API** | 5 experts | Core métier et APIs | Microservices, calculs actuariels, sécurité |
+| **Squad Frontend/Mobile** | 4 experts | Expérience utilisateur | Portails web, app mobile, UX/UI |
+| **Squad Data/IA** | 3 experts | Intelligence et analytics | IA anti-fraude, robo-advisor, BI |
+| **Squad Transversal** | 3 experts | Support et gouvernance | Infrastructure, qualité, conformité |
+
+### Certifications et Expertises Avancées
+
+| **Certifications Techniques** | **Nombre d'Experts** | **Technologies Maîtrisées** |
+|--------------------------------|----------------------|------------------------------|
+| **Cloud (AWS/Azure/GCP)** | 4 experts | Kubernetes, Docker, Terraform, Helm |
+| **Sécurité (CISSP/CEH)** | 2 experts | Zero Trust, Pentest, Cryptographie |
+| **Actuariat (IA/CFA)** | 2 experts | Modélisation, Monte Carlo, Finance |
+| **IA/ML (PhD/Certifications)** | 2 experts | Deep Learning, NLP, Recommandation |
+| **Développement (Spring/React)** | 6 experts | Java 17, Spring Boot 3, React 18, TypeScript |
+
+### Gouvernance et Communication
+
+**Reporting Hiérarchique :**
+- **Chef de Projet** : Architecte Solution Senior (coordination générale)
+- **Lead Techniques** : 4 responsables de squad (reporting hebdomadaire)
+- **Experts Seniors** : 6 consultants spécialisés (intervention ponctuelle)
+- **Équipe Core** : 15 membres temps plein (daily standups)
+
+**Communication Client :**
+- **Sponsor Executive** : Architecte Solution Senior
+- **Interface Métier** : Business Analyst Senior + Actuaire Conseil
+- **Support Technique** : Ingénieur Support + Expert Sécurité
+- **Formation Utilisateur** : Consultant UX/UI + Business Analyst
+
+Cette matrice de compétences garantit une couverture complète de tous les aspects techniques, métier et organisationnels du projet Waajal Ëlëk, avec une redondance d'expertise sur les domaines critiques pour assurer la réussite et la pérennité de la solution.
