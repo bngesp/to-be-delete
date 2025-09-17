@@ -1,18 +1,25 @@
-# OFFRE TECHNIQUE PREMIUM - WAAJAL ËLËK
-## Plateforme de Gestion du Régime de Retraite Complémentaire des Armées
+# OFFRE TECHNIQUE RÉVISÉE - WAAJAL ËLËK
+## Plateforme de Gestion du Régime de Retraite de l'État-major Général des Armées
 
 ---
 
-## 📋 SOMMAIRE GÉNÉRAL
+## I. APPROCHE TECHNIQUE PRAGMATIQUE
 
-Cette offre technique présente une solution **cloud-native** de nouvelle génération, conçue avec une architecture microservices moderne pour répondre aux défis de scalabilité, sécurité et évolutivité d'un régime de retraite complémentaire.
+### Architecture de base
+- **Framework moderne** : Domain-Driven Design avec API REST
+- **Sécurité renforcée** : Architecture Zero Trust adaptée au secteur militaire
+- **Base de données** : PostgreSQL avec système d'audit complet
+- **Interface** : Application web responsive (PWA)
 
-### 🎯 **Notre Proposition de Valeur**
-- ✅ **Solution techniquement supérieure** : Architecture microservices Spring Boot 3 + Java 17
-- ✅ **23 modules fonctionnels** (vs 19-20 chez les concurrents) 
-- ✅ **Innovations uniques** : IA anti-fraude, Robo-advisor, Business Intelligence avancé
-- ✅ **Économie significative** : 103M FCFA budget respecté
-- ✅ **Livraison garantie** : 1er novembre 2025
+### Technologies retenues (justifiées)
+- **Moteur actuariel avec simulations Monte Carlo** : Projections de pension sophistiquées
+- **Assistant IA avec RAG** : Support utilisateur intelligent basé sur la réglementation militaire
+- **Intégrations paiement** : Wave, Orange Money, virements bancaires
+
+### Technologies supprimées (simplification)
+- ~~Blockchain~~ : Remplacé par audit trails PostgreSQL
+- ~~Robo-advisor~~ : Fonctionnalité non justifiée pour ce secteur
+- ~~IA anti-fraude~~ : Remplacé par règles métier et alertes
 
 ---
 
@@ -35,15 +42,22 @@ Cette offre technique présente une solution **cloud-native** de nouvelle géné
 - **[Infrastructure et Déploiement Cloud](./offre/02-architecture/infrastructure-cloud.md)**  
   *Spécifications d'hébergement, scalabilité automatique et monitoring 360°*
 
-### 03. ⚙️ FONCTIONNALITÉS MÉTIER
-- **[Pôle Gestion du Cycle de Vie (Modules 1-7)](./offre/03-fonctionnalites/pole-cycle-vie.md)**  
-  *Gestion du personnel militaire, adhésions, cotisations et conversion en points*
+## II. MODULES FONCTIONNELS - 9 MODULES ESSENTIELS
 
-- **[Pôle Gestion Financière (Modules 8-15)](./offre/03-fonctionnalites/pole-gestion-financiere.md)**  
-  *Pensions, rachats, avances, comptabilité, investissements et rendements*
+### Phase 1 - Socle opérationnel (5 modules)
+1. **[Gestion du Personnel Militaire](./offre/03-fonctionnalites/pole-cycle-vie.md)** - Référentiel grades, affectations, carrières
+2. **Gestion des Adhésions** - Inscription, validation dossiers, statuts
+3. **Gestion des Cotisations** - Calculs, collecte, paiements en ligne
+4. **Tableau de Bord** - Indicateurs de gestion, statistiques, exports
+5. **Portail Personnel** - Consultation comptes, simulations, documents
 
-- **[Pôle Pilotage et Innovation (Modules 16-23)](./offre/03-fonctionnalites/pole-pilotage-innovation.md)**  
-  *IA, mobile, simulateurs, business intelligence et innovations exclusives*
+### Phase 2 - Fonctionnalités avancées (4 modules)
+6. **[Gestion des Pensions](./offre/03-fonctionnalites/pole-gestion-financiere.md)** - Calculs réglementaires, liquidations, paiements
+7. **Administration & Sécurité** - Gestion utilisateurs, logs, audit trails
+8. **[Simulateur Actuariel](./offre/03-fonctionnalites/pole-pilotage-innovation.md)** - Projections Monte Carlo, stress tests, modélisations
+9. **Assistant IA** - Chatbot intelligent, RAG sur réglementation militaire
+
+**Couverture TDR** : 100% avec 9 modules optimisés (vs 23 modules initiaux)
 
 ### 04. 👥 ÉQUIPE PROJET & EXPERTISE
 - **[Organisation et Compétences de l'Équipe](./offre/04-equipe/organisation-competences.md)**  
@@ -52,12 +66,22 @@ Cette offre technique présente une solution **cloud-native** de nouvelle géné
 - **[Méthodologie Agile et Gestion de Projet](./offre/04-equipe/methodologie-agile.md)**  
   *Approche Scrum adaptée avec DevOps intégré et validation continue*
 
-### 05. 📅 PLANNING DE LIVRAISON
-- **[Planning Agile par Phases](./offre/05-planning/planning-phases.md)**  
-  *Roadmap détaillée : MVP novembre 2025, solution complète décembre, innovations janvier 2026*
+### 05. 📅 CALENDRIER & MODALITÉS
 
-- **[Sprints et Jalons de Livraison](./offre/05-planning/sprints-jalons.md)**  
-  *Organisation des sprints de 2 semaines avec livrables et critères d'acceptation*
+#### Planning de réalisation
+- **Phase 1 - MVP opérationnel** : Janvier à Mars 2026
+- **Phase 2 - Version complète** : Avril à Mai 2026
+- **Garantie** : 3 mois après livraison finale
+
+#### Modalités de paiement
+- **50%** à la signature du contrat (44 000 000 FCFA)
+- **30%** à la livraison Phase 1 - MVP (26 400 000 FCFA)
+- **20%** à la livraison finale Phase 2 (17 600 000 FCFA)
+
+#### Jalons contractuels
+- **J+90** : Phase 1 fonctionnelle avec 5 modules opérationnels
+- **J+150** : Livraison complète avec modules actuariels et IA
+- **Pénalités** : 0,5% du montant total par semaine de retard
 
 ### 06. 🔧 MÉTHODOLOGIE & QUALITÉ
 - **[DevOps et Intégration Continue](./offre/06-methodologie/devops-ci-cd.md)**  
@@ -66,12 +90,29 @@ Cette offre technique présente une solution **cloud-native** de nouvelle géné
 - **[Stratégie de Tests Multi-Niveaux](./offre/06-methodologie/strategie-tests.md)**  
   *Tests pyramidaux : 70% unitaires, 20% intégration, 10% end-to-end*
 
-### 07. 💰 ESTIMATION FINANCIÈRE
-- **[Décomposition des Coûts par Phase](./offre/07-estimation/decomposition-couts.md)**  
-  *Estimation détaillée : 48M (Phase 1), 28M (Phase 2), 32M (Phase 3) + services*
+### 07. 💰 STRUCTURE FINANCIÈRE DÉTAILLÉE
 
-- **[Comparaison Concurrentielle et ROI](./offre/07-estimation/comparaison-roi.md)**  
-  *Analyse comparative des offres et calcul du retour sur investissement*
+#### Coût global forfaitaire
+
+| **Composant** | **Détail** | **Montant HT (FCFA)** |
+|---------------|------------|---------------------|
+| **Framework & Infrastructure** | Sécurité, API, architecture | 12 000 000 |
+| **Modules Phase 1 (5 modules)** | Socle fonctionnel opérationnel | 35 000 000 |
+| **Modules Phase 2 (4 modules)** | Fonctionnalités avancées | 25 000 000 |
+| **Moteur Actuariel Monte Carlo** | Simulations & projections | 6 000 000 |
+| **Assistant IA + RAG** | Chatbot intelligent | 3 000 000 |
+| **Intégrations Paiement** | Wave, Orange Money, banques | 2 000 000 |
+| **Tests & Documentation** | QA, formation, livrables | 3 000 000 |
+| **Déploiement & Formation** | Mise en production, support | 2 000 000 |
+| **TOTAL FORFAITAIRE HT** |  | **88 000 000** |
+
+#### Répartition par phase
+
+| **Phase** | **Livrables** | **Montant** | **Délai** |
+|-----------|---------------|-------------|-----------|
+| **Phase 1 - MVP** | 5 modules + framework | 47 000 000 | 3 mois |
+| **Phase 2 - Complet** | 4 modules avancés + IA | 41 000 000 | 2 mois |
+| **Total projet** |  | **88 000 000** | **5 mois** |
 
 ### 08. 🚀 DÉPLOIEMENT & INFRASTRUCTURE
 - **[Spécifications Techniques d'Hébergement](./offre/08-deploiement/specifications-hebergement.md)**  
@@ -103,26 +144,35 @@ Cette offre technique présente une solution **cloud-native** de nouvelle géné
 
 ---
 
-## 🎯 RÉSUMÉ EXÉCUTIF
+## VI. GESTION DES RISQUES
 
-Cette offre technique représente une approche révolutionnaire pour la gestion moderne d'un régime de retraite complémentaire. En combinant **expertise actuarielle**, **innovation technologique** et **excellence opérationnelle**, nous proposons une solution qui :
+### Risques maîtrisés
+- **Complexité technique réduite** : Suppression blockchain, robo-advisor
+- **Expertise disponible** : Technologies mainstream + 2 spécialisations justifiées
+- **Budget sécurisé** : 4M FCFA de marge sur les 92M maximum
 
-### ✨ **Dépasse les Exigences**
-- **Conformité TDR à 100%** avec 23 modules fonctionnels complets
-- **Architecture future-proof** évolutive sur 20+ ans
-- **Sécurité niveau bancaire** avec certification et audit
+### Éléments différés (Phase 3 optionnelle)
+- Application mobile native
+- Modules d'investissement avancés
+- Fonctionnalités de trading automatisé
 
-### 💡 **Apporte des Innovations Uniques**
-- **Intelligence Artificielle** intégrée pour sécurité et conseil
-- **Business Intelligence** interactif pour pilotage stratégique  
-- **Expérience utilisateur** mobile-first exceptionnelle
-- **Simulations actuarielles** Monte Carlo de précision
+---
 
-### 💰 **Optimise l'Investissement**
-- **103M FCFA budget total** respecté parfaitement
-- **ROI 285%** sur 5 ans avec gains opérationnels mesurables
-- **Équipe renforcée** 15 experts (vs 12 ailleurs) 
-- **Garantie étendue** 12 mois (vs 6 mois standard)
+## SYNTHÈSE DE L'OFFRE RÉVISÉE
+
+**Montant total :** 88 000 000 FCFA HT (dans la limite des 92M)
+**Durée :** 5 mois (réduit vs 6 mois initial)
+**Modules :** 9 modules essentiels (vs 23 initiaux)
+**Technologies :** 2 éléments avancés justifiés (actuariel + IA)
+
+### Réponses aux recommandations du rapport
+
+✅ **Ton marketing supprimé** : Approche factuelle et technique
+✅ **Chiffres concrets détaillés** : Budget, délais, jalons précis
+✅ **Surenchère technologique éliminée** : Focus sur 2 technologies à valeur ajoutée
+✅ **Cadrage contractuel strict** : Pénalités, jalons, coûts fermes
+✅ **Priorisation MVP** : 5 modules essentiels en Phase 1
+✅ **Budget maîtrisé** : 88M vs 92M maximum autorisé
 
 ---
 
@@ -344,18 +394,14 @@ Cette stratégie design garantit que Waajal Ëlëk offre non seulement les fonct
 
 ## 🤝 ENGAGEMENT DE RÉSULTAT
 
-**Nous nous engageons formellement à livrer** :
+### Livrables garantis
 
-✅ Solution 100% conforme TDR  
-✅ 23 modules fonctionnels vs 19-20 concurrents  
-✅ Mise en production garantie 1er novembre 2025  
-✅ Architecture microservices cloud-native  
-✅ 4 innovations technologiques exclusives  
-✅ Formation complète équipes (40h incluses)  
-✅ Performance >99.5% disponibilité  
-✅ Support 12 mois garanti  
+- **Couverture 100% du TDR** avec fonctionnalités essentielles
+- **Technologies matures** et équipe expérimentée disponible
+- **Calendrier réaliste** avec jalons contractuels
+- **Approche évolutive** permettant ajouts futurs
 
-**Pour 103M FCFA conformément au budget TDR**
+**Montant ferme : 88 000 000 FCFA HT**
 
 ---
 
