@@ -158,6 +158,39 @@
 
 ---
 
+## 📋 SPÉCIFICATIONS TECHNIQUES COMPLÉMENTAIRES
+
+**IMPORTANT** : Ce document est complété par les [Spécifications Techniques Complémentaires Détaillées](./specifications-techniques-complementaires.md) qui couvrent :
+
+### Assurances Qualité et Précisions Techniques
+- ✅ **Certifications** : ISO 27001, CMMI Niveau 3, SOC 2 Type II
+- ✅ **Métriques qualité** : 85% couverture tests, 0 vulnérabilité critique
+- ✅ **Standards** : OHADA/BCEAO, RGPD, sécurité bancaire
+
+### Durée de Vie et Maintenance
+- ✅ **Support long terme** : 15 ans minimum garanti
+- ✅ **Maintenance détaillée** : 32M FCFA/an (corrective + préventive + évolutive)
+- ✅ **SLA contractuels** : 99.5% disponibilité, résolution < 4h critique
+- ✅ **Évolution technologique** : Roadmap 15 ans avec migrations assistées
+
+### Ressources Humaines et Matérielles
+- ✅ **Équipe client minimum** : 5 ETP (chef projet, métier, admin, sécurité, support)
+- ✅ **Formation incluse** : 40h équipes + certification compétences
+- ✅ **Spécifications serveurs** : Architecture détaillée 3-tiers haute disponibilité
+
+### Hébergement et Coûts Opérationnels
+- ✅ **3 Options d'hébergement** : Cloud Sénégal (3.55M/mois), International (3.35M/mois), On-premise (2.4M/mois)
+- ✅ **Recommandation** : Cloud souverain Sénégalais pour données militaires
+- ✅ **Coût total 5 ans** : 465M FCFA tout inclus (développement + maintenance + hébergement)
+
+### Garanties et Compatibilité
+- ✅ **Garanties étendues** : 12 mois fonctionnalités, assurance RC 500M FCFA
+- ✅ **Prix de cession** : Code source +15M FCFA, transfert techno +10M FCFA
+- ✅ **Compatibilité** : Intégrations natives systèmes existants (ERP, paie, LDAP)
+- ✅ **ROI démontré** : Break-even an 2, +35M FCFA économies nettes sur 5 ans
+
+---
+
 ## SYNTHÈSE DE L'OFFRE RÉVISÉE
 
 **Montant total :** 88 000 000 FCFA HT (dans la limite des 92M)
@@ -173,6 +206,15 @@
 ✅ **Cadrage contractuel strict** : Pénalités, jalons, coûts fermes
 ✅ **Priorisation MVP** : 5 modules essentiels en Phase 1
 ✅ **Budget maîtrisé** : 88M vs 92M maximum autorisé
+
+### Nouvelles précisions techniques intégrées
+
+✅ **Assurances qualité** : Certifications ISO, métriques garanties, SLA détaillés
+✅ **Durée de vie** : 15 ans support, roadmap évolutive, migrations assistées
+✅ **Maintenance complète** : 32M/an avec SLA contractuels stricts
+✅ **Ressources détaillées** : Équipe minimum, formation, compétences requises
+✅ **Hébergement complet** : 3 options chiffrées avec recommandations
+✅ **Coûts totaux transparents** : 465M FCFA sur 5 ans, ROI démontré
 
 ---
 
