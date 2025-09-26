@@ -72,103 +72,29 @@ Notre architecture de sécurité s'appuie sur le principe "Zero Trust" : aucune 
 
 ---
 
-# PARTIE II : MODULES FONCTIONNELS ET DÉVELOPPEMENT
+# PARTIE II : MODULES FONCTIONNELS
 
-## 📦 MODULES DÉVELOPPÉS (9 MODULES ESSENTIELS)
+## 📦 MODULES DÉVELOPPÉS (14 MODULES COMPLETS)
 
-### Phase 1 : Socle Opérationnel (5 modules)
+### PÔLE 1 : GESTION DU CYCLE DE VIE (Modules 1-6)
+1. **Gestion du Personnel Militaire** - Référentiel grades, carrières, structures hiérarchiques
+2. **Gestion des Adhésions** - Processus dématérialisé, simulations temps réel
+3. **Gestion des Cotisations** - Calculs automatisés, intégration mobile money
+4. **Conversion en Points** - Mécanisme temps réel, traçabilité exhaustive
+5. **Tableau de Bord Opérationnel** - KPIs temps réel, reporting automatisé
+6. **Portail Personnel Adhérents** - Interface libre-service, simulations personnalisées
 
-#### Module 1 : Gestion du Personnel Militaire
-Le module de gestion du personnel militaire constitue le cœur informationnel de la plateforme Waajal Ëlëk. Il va bien au-delà d'un simple répertoire pour devenir un référentiel vivant et dynamique qui capture la richesse et la complexité des carrières militaires sénégalaises.
+### PÔLE 2 : GESTION FINANCIÈRE (Modules 7-10)
+7. **Gestion Intégrée des Pensions** - Liquidation automatisée, options multiples
+8. **Administration et Sécurité** - RBAC avancé, audit trails, monitoring 24/7
+9. **Simulateur Actuariel Monte Carlo** - Modèles stochastiques, optimisation portefeuille
+10. **Assistant IA avec RAG** - LLM spécialisé, base connaissances, multilingue
 
-**Fonctionnalités clés :**
-- Modélisation sophistiquée des structures hiérarchiques
-- Gestion des équivalences entre grades des différentes armes
-- Parcours de carrière types et mobilités inter-armes
-- Interface avec les systèmes RH existants
-- Traçabilité historique complète
-
-#### Module 2 : Gestion des Adhésions
-Le processus d'adhésion au régime Waajal Ëlëk a été entièrement repensé pour offrir une expérience utilisateur exceptionnelle tout en maintenant le plus haut niveau de conformité réglementaire.
-
-**Fonctionnalités clés :**
-- Dématérialisation intégrale du parcours d'adhésion
-- Interface d'adhésion avec simulations en temps réel
-- Validation automatique selon les critères du régime
-- Flexibilité des modalités d'adhésion
-- Calcul automatique des cotisations personnalisées
-
-#### Module 3 : Gestion des Cotisations
-Le module de gestion des cotisations représente la convergence entre sophistication technique et simplicité d'usage. Il calcule automatiquement les cotisations dues en tenant compte d'une multitude de paramètres.
-
-**Fonctionnalités clés :**
-- Calculs automatisés multi-paramètres
-- Gestion des cas complexes (promotions, rétroactivités)
-- Intégration Wave, Orange Money, virements
-- Prélèvements automatiques sur salaire
-- Réconciliation automatique des paiements
-
-#### Module 4 : Tableaux de Bord et Reporting
-Le tableau de bord constitue le centre névralgique de pilotage opérationnel de la plateforme Waajal Ëlëk. Il transforme les données brutes du système en intelligence actionnable.
-
-**Fonctionnalités clés :**
-- Indicateurs financiers en temps réel
-- Statistiques démographiques dynamiques
-- Métriques de performance opérationnelle
-- Capacités d'export automatique
-- Rapports réglementaires OHADA/BCEAO
-
-#### Module 5 : Portail Personnel Adhérents
-Le portail personnel représente la révolution de la relation entre l'institution et ses adhérents. Chaque militaire dispose d'un espace personnel sécurisé, accessible 24h/24.
-
-**Fonctionnalités clés :**
-- Authentification forte (double facteur)
-- Consultation des comptes en temps réel
-- Simulations personnalisées de pension
-- Téléchargement de documents officiels
-- Messagerie sécurisée intégrée
-
-### Phase 2 : Fonctionnalités Avancées (4 modules)
-
-#### Module 6 : Gestion des Pensions
-Le module de gestion des pensions constitue l'aboutissement naturel du parcours de l'adhérent au sein du régime Waajal Ëlëk.
-
-**Fonctionnalités clés :**
-- Processus de liquidation automatisé
-- Options de sortie multiples (rente, capital, mixte)
-- Calculs actuariels sophistiqués
-- Gestion dynamique post-liquidation
-- Optimisation fiscale automatique
-
-#### Module 7 : Administration et Sécurité
-Le module d'administration et sécurité constitue le système nerveux central de gouvernance de la plateforme.
-
-**Fonctionnalités clés :**
-- Gestion RBAC sophistiquée
-- Authentification forte obligatoire
-- Audit et traçabilité complets
-- Monitoring et supervision 24/7
-- Stratégie de sauvegarde 3-2-1
-
-#### Module 8 : Simulateur Actuariel Monte Carlo
-Le module de simulations Monte Carlo apporte les techniques de modélisation les plus avancées de la finance quantitative moderne.
-
-**Fonctionnalités clés :**
-- Modèles stochastiques sophistiqués
-- Simulations sur 50,000+ scénarios
-- Visualisations probabilistes avancées
-- Optimisation de portefeuille
-- Stress testing économique
-
-#### Module 9 : Assistant IA avec RAG
-Le module d'assistant intelligent démocratise l'accès à l'expertise complexe d'un régime de retraite.
-
-**Fonctionnalités clés :**
-- Architecture conversationnelle LLM + RAG
-- Base de connaissances spécialisée
-- Support multilingue (français/wolof)
-- Simulation guidée personnalisée
-- Apprentissage continu
+### PÔLE 3 : EXTENSIONS OPTIONNELLES (Modules 11-14)
+11. **Application Mobile Native** - React Native iOS/Android, synchronisation intelligente
+12. **Gestion Avancée des Investissements** - Optimisation Markowitz, trading simulator
+13. **Intégration Mobile Money Avancée** - Passerelles multi-opérateurs, micropaiements
+14. **Business Intelligence Interactive** - Big Data temps réel, analyse prédictive ML
 
 ---
 
@@ -178,18 +104,44 @@ Le module d'assistant intelligent démocratise l'accès à l'expertise complexe 
 
 ### Développement Logiciel : 69 780 000 FCFA HT
 
-| **Module / Lot** | **Phase** | **Montant (FCFA HT)** | **Détail Fonctionnel** |
-|------------------|-----------|----------------------|------------------------|
-| **Architecture & Cadrage** | Socle | **6 850 000** | Infrastructure DDD, sécurité Zero Trust, APIs REST |
-| **Module Gestion Personnel** | Phase 1 | **9 300 000** | Référentiel militaire, grades, carrières, affectations |
-| **Module Adhésions** | Phase 1 | **8 950 000** | Processus inscription, validation, simulations temps réel |
-| **Module Cotisations** | Phase 1 | **7 250 000** | Calculs automatisés, intégrations paiement mobile |
-| **Tableaux de Bord** | Phase 1 | **6 180 000** | KPIs temps réel, reporting, statistiques démographiques |
-| **Portail Personnel** | Phase 1 | **8 400 000** | Interface adhérents, consultation comptes, documents |
-| **Module Pensions** | Phase 2 | **6 150 000** | Liquidation, calculs actuariels, options de sortie |
-| **Administration & Sécurité** | Phase 2 | **9 700 000** | RBAC, audit trails, monitoring, sauvegardes |
-| **Simulateur Monte Carlo + IA** | Phase 2 | **7 000 000** | Projections stochastiques, assistant conversationnel |
-| **TOTAL DÉVELOPPEMENT** | | **69 780 000** | **9 modules complets + infrastructure** |
+#### PÔLE 1 : CYCLE DE VIE (Modules 1-6) - Phase 1 Core : 40 530 000 FCFA
+
+| **Module** | **Montant (FCFA HT)** | **Détail Fonctionnel** |
+|------------|----------------------|------------------------|
+| **Architecture & Socle DDD** | **6 850 000** | Infrastructure microservices, sécurité Zero Trust, APIs |
+| **Module 1 - Personnel Militaire** | **8 200 000** | Référentiel grades, carrières, structures hiérarchiques |
+| **Module 2 - Adhésions** | **6 980 000** | Processus dématérialisé, simulations temps réel |
+| **Module 3 - Cotisations** | **7 450 000** | Calculs automatisés, intégration mobile money |
+| **Module 4 - Conversion Points** | **5 350 000** | Mécanisme temps réel, traçabilité exhaustive |
+| **Module 5 - Tableau de Bord** | **3 200 000** | KPIs opérationnels, reporting automatisé |
+| **Module 6 - Portail Personnel** | **2 500 000** | Interface adhérents, libre-service, simulations |
+| **SOUS-TOTAL PÔLE 1** | **40 530 000** | **6 modules cycle de vie complets** |
+
+#### PÔLE 2 : GESTION FINANCIÈRE (Modules 7-10) - Phase 2 Advanced : 23 250 000 FCFA
+
+| **Module** | **Montant (FCFA HT)** | **Détail Fonctionnel** |
+|------------|----------------------|------------------------|
+| **Module 7 - Pensions** | **6 150 000** | Liquidation automatisée, options multiples |
+| **Module 8 - Administration/Sécurité** | **5 800 000** | RBAC avancé, audit trails, monitoring 24/7 |
+| **Module 9 - Monte Carlo** | **4 800 000** | Simulations stochastiques, optimisation portefeuille |
+| **Module 10 - Assistant IA + RAG** | **6 500 000** | LLM spécialisé, base connaissances, multilingue |
+| **SOUS-TOTAL PÔLE 2** | **23 250 000** | **4 modules gestion financière avancés** |
+
+#### PÔLE 3 : EXTENSIONS OPTIONNELLES (Modules 11-14) - Phase 3 Innovation : 6 000 000 FCFA
+
+| **Module** | **Montant (FCFA HT)** | **Détail Fonctionnel** |
+|------------|----------------------|------------------------|
+| **Module 11 - Mobile Native** | **2 100 000** | React Native iOS/Android, synchronisation intelligente |
+| **Module 12 - Invest. Avancés** | **1 800 000** | Optimisation Markowitz, trading simulator |
+| **Module 13 - Mobile Money+** | **1 200 000** | Passerelles multi-opérateurs, micropaiements |
+| **Module 14 - BI Interactive** | **900 000** | Big Data temps réel, analyse prédictive ML |
+| **SOUS-TOTAL PÔLE 3** | **6 000 000** | **4 modules extensions optionnelles** |
+
+### **RÉCAPITULATIF DÉVELOPPEMENT COMPLET**
+- **Phase 1 (Core)** : 40 530 000 FCFA - 6 modules essentiels
+- **Phase 2 (Advanced)** : 23 250 000 FCFA - 4 modules financiers
+- **Phase 3 (Innovation)** : 6 000 000 FCFA - 4 modules optionnels
+- **TOTAL DÉVELOPPEMENT** : **69 780 000 FCFA** - **14 modules complets**
 
 ### Infrastructure Matérielle : 6 300 000 FCFA HT
 
@@ -667,10 +619,10 @@ Répartition du paiement initial:
 ```
 
 #### Deuxième Versement : 30% = 22 824 000 FCFA
-**À la livraison Phase 1 - MVP (J+90)**
+**À la livraison Phase 1 - Core (J+90)**
 ```yaml
 Livraison conditionnelle Phase 1:
-├── 5 modules opérationnels validés
+├── 6 modules Pôle Cycle de Vie opérationnels validés
 ├── Tests de recette utilisateur réussis
 ├── Formation équipes effectuée
 ├── Documentation remise et approuvée
@@ -678,7 +630,7 @@ Livraison conditionnelle Phase 1:
 └── Mise en service pilote réalisée
 
 Répartition du paiement intermédiaire:
-├── Modules Phase 1 développés: 18 000 000 FCFA
+├── Modules Pôle 1 développés: 18 000 000 FCFA
 ├── Tests et validation: 2 000 000 FCFA
 ├── Formation et documentation: 1 824 000 FCFA
 ├── Matériel complémentaire: 1 000 000 FCFA
@@ -689,7 +641,8 @@ Répartition du paiement intermédiaire:
 **À la livraison finale complète (J+150)**
 ```yaml
 Livraison conditionnelle Phase 2:
-├── 4 modules avancés opérationnels
+├── 4 modules Pôle Gestion Financière opérationnels
+├── 4 modules Pôle Extensions disponibles (optionnels)
 ├── Tests de charge et sécurité validés
 ├── Migration données complète
 ├── Formation avancée terminée
@@ -697,7 +650,7 @@ Livraison conditionnelle Phase 2:
 └── Procès-verbal de réception signé
 
 Répartition du paiement final:
-├── Modules Phase 2 développés: 12 000 000 FCFA
+├── Modules Pôle 2 développés: 12 000 000 FCFA
 ├── Tests finaux et sécurité: 1 500 000 FCFA
 ├── Mise en production: 1 200 000 FCFA
 ├── Garantie et support initial: 516 000 FCFA
@@ -785,7 +738,7 @@ BÉNÉFICES TOTAUX ANNUELS: 165 000 000 FCFA/an
 
 **POUR 76 080 000 FCFA FERME, VOUS OBTENEZ :**
 
-✅ **9 Modules Complets** : Couverture 100% des besoins TDR
+✅ **14 Modules Complets** : Couverture 100% des besoins TDR (3 pôles fonctionnels)
 ✅ **Technologies Avancées** : Monte Carlo actuariel + IA conversationnelle
 ✅ **Architecture Évolutive** : Extensions futures sans refonte
 ✅ **Garantie 15 ans** : Support long terme avec roadmap technologique
@@ -805,7 +758,7 @@ BÉNÉFICES TOTAUX ANNUELS: 165 000 000 FCFA/an
 
 ### Livrables Garantis J+150
 
-- ✅ **Plateforme complète** : 9 modules opérationnels en production
+- ✅ **Plateforme complète** : 14 modules opérationnels en production (3 pôles)
 - ✅ **Infrastructure sécurisée** : Hébergement cloud souverain fonctionnel
 - ✅ **Équipes formées** : 40h formation + certification validée
 - ✅ **Documentation complète** : Guides utilisateur et technique
